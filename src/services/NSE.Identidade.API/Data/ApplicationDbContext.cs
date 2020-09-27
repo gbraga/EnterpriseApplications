@@ -2,10 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using System;
 using System.IO;
-using System.Threading;
 
 namespace NSE.Identidade.API.Data
 {
