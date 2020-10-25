@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using NSE.Identidade.API.Extentions;
 using NSE.Identidade.API.Models;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -90,6 +92,15 @@ namespace NSE.Identidade.API.Controllers
         {
             var user = await _userManager.FindByEmailAsync(email);
             var claims = await _userManager.GetClaimsAsync(user);
+
+            var identityClaims = await ObterClaimsAsync(claims, user);
+            var encodedToken = CodificarToken(identityClaims);
+
+            return ObterRespostaToken(encodedToken, user, claims);
+        }
+
+        private async Task<ClaimsIdentity> ObterClaimsAsync(IList<Claim> claims, IdentityUser user)
+        {
             var userRoles = await _userManager.GetRolesAsync(user);
 
             claims.Add(new Claim(type: JwtRegisteredClaimNames.Sub, value: user.Id));
@@ -106,6 +117,11 @@ namespace NSE.Identidade.API.Controllers
             var identityClaims = new ClaimsIdentity();
             identityClaims.AddClaims(claims);
 
+            return identityClaims;
+        }
+
+        private string CodificarToken(ClaimsIdentity identityClaims)
+        {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
 
@@ -120,6 +136,11 @@ namespace NSE.Identidade.API.Controllers
 
             var encodedToken = tokenHandler.WriteToken(token);
 
+            return encodedToken;
+        }
+
+        private UsuarioRespostaLoginViewModel ObterRespostaToken(string encodedToken, IdentityUser user, IList<Claim> claims)
+        {
             var response = new UsuarioRespostaLoginViewModel
             {
                 AccessToken = encodedToken,
