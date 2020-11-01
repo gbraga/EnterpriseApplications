@@ -26,7 +26,12 @@ namespace NSE.WebApp.MVC.Services
 
             var response = await _httpClient.PostAsync(requestUri: "https://localhost:44346/api/identidade/autenticar", loginContent);
 
-            return JsonSerializer.Deserialize<UsuarioRespostaLoginViewModel>(await response.Content.ReadAsStringAsync());
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            };
+
+            return JsonSerializer.Deserialize<UsuarioRespostaLoginViewModel>(await response.Content.ReadAsStringAsync(), options);
         }
 
         public async Task<UsuarioRespostaLoginViewModel> Registro(UsuarioRegistroViewModel usuarioRegistro)
