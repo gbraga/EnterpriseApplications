@@ -29,7 +29,6 @@ namespace NSE.Identidade.API
             Configuration = builder.Build();
         }
 
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
