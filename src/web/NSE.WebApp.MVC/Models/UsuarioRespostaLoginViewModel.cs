@@ -7,5 +7,7 @@
         public double ExpiresIn { get; set; }
 
         public UsuarioTokenViewModel UsuarioToken { get; set; }
+
+        public ResponseResult ResponseResult { get; set; }
     }
 }
