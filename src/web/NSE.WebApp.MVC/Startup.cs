@@ -21,7 +21,7 @@ namespace NSE.WebApp.MVC
         {
             services.AddIdentityConfiguration();
 
-            services.AddControllersWithViews();
+            services.AddMvcConfiguration();
 
             services.RegisterServices();
         }

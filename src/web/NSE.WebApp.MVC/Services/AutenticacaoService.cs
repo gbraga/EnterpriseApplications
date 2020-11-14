@@ -50,7 +50,7 @@ namespace NSE.WebApp.MVC.Services
                 mediaType: "application/json"
             );
 
-            var response = await _httpClient.PostAsync(requestUri: "https://localhost:44396/api/identidade/nova-conta", registroContent);
+            var response = await _httpClient.PostAsync(requestUri: "https://localhost:44346/api/identidade/nova-conta", registroContent);
 
             var options = new JsonSerializerOptions
             {
