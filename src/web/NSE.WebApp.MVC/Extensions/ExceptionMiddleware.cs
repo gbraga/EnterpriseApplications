@@ -32,7 +32,7 @@ namespace NSE.WebApp.MVC.Extensions
         {
             if (httpRequestException.StatusCode == HttpStatusCode.Unauthorized)
             {
-                context.Response.Redirect(location: "/login");
+                 context.Response.Redirect(location: $"/login?ReturnUrl={context.Request.Path}");
                 return;
             }
 
